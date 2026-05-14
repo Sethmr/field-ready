@@ -6,3 +6,7 @@ node_modules/
 .wrangler/
 dist/
 build/
+
+# Local outputs from admin scripts (not source-of-truth)
+scripts/logs.json
+scripts/logs.jsonl
