@@ -137,12 +137,12 @@ export const PACKS = ${packsJson};
 
 // ─── Anthropic call ────────────────────────────────────────────────────────
 
-async function generateVariants(client, model, card, n) {
+async function generateVariants(client, model, cardId, frontBack, n) {
   const response = await client.messages.create({
     model,
-    max_tokens: 4096,
+    max_tokens: 8192,
     system: SYSTEM_PROMPT,
-    messages: [{ role: "user", content: userPrompt(card, n) }],
+    messages: [{ role: "user", content: userPrompt(frontBack, n) }],
   });
   const raw = response.content
     .filter(b => b.type === "text")
@@ -150,14 +150,19 @@ async function generateVariants(client, model, card, n) {
     .join("");
   // Strip ```json fences if the model added them despite the instruction.
   const text = raw.replace(/^```(?:json)?\s*/m, "").replace(/\s*```\s*$/m, "").trim();
+  const stop = response.stop_reason;
   let parsed;
   try {
     parsed = JSON.parse(text);
   } catch (e) {
-    throw new Error(`Card ${card.id}: model returned non-JSON:\n${raw.slice(0, 200)}`);
+    const head = raw.slice(0, 200);
+    const tail = raw.length > 400 ? "…" + raw.slice(-200) : "";
+    throw new Error(
+      `Card ${cardId}: non-JSON (stop_reason=${stop}, len=${raw.length}):\nHEAD: ${head}\nTAIL: ${tail}\nParse error: ${e.message}`
+    );
   }
   if (!Array.isArray(parsed.variants)) {
-    throw new Error(`Card ${card.id}: response missing variants[]`);
+    throw new Error(`Card ${cardId}: response missing variants[]`);
   }
   return parsed.variants.map((v, i) => ({
     id: `v${i + 1}`,
@@ -201,6 +206,7 @@ async function main() {
       newVariants = await generateVariants(
         client,
         args.model,
+        card.id,
         { front: originalFront, back: originalBack },
         args.n,
       );
