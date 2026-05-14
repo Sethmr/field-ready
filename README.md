@@ -68,6 +68,31 @@ Cloudflare Pages auto-deploys on push to `main`. Build command empty, output dir
 
 DNS: `getfieldready.app` and `www.getfieldready.app` both CNAME to `field-ready.pages.dev`, Proxied. Namecheap email-forwarding MX/SPF records preserved alongside.
 
+## Data capture
+
+At the end of every session the client fire-and-forget POSTs the full state snapshot (FSRS card states + the append-only `answerLog` + streak + settings) to `/api/log`. The Pages Function writes it to a Cloudflare KV namespace keyed by `log:{deviceId}:{timestamp}`. Seth pulls all logs via `/api/logs` (bearer-token-gated) and runs `scripts/summarize-logs.mjs` to get a markdown report he pastes into Claude for "add this kind of card / retire these cards" recommendations.
+
+Brandi is the only intended user. Each browser/device gets a stable `deviceId` so her iPhone and laptop come through as separate streams. The data lives entirely inside Seth's Cloudflare account.
+
+**Cloudflare setup** (one-time, dashboard):
+1. Workers & Pages → KV → Create namespace → name `fieldready-logs`
+2. Pages project `field-ready` → Settings → Functions → KV namespace bindings → Add → variable `LOGS_KV` → namespace `fieldready-logs`
+3. Pages project → Settings → Environment variables → Add `ADMIN_TOKEN` (Production scope) — generate a long random string and stash it in Keychain too:
+   ```bash
+   security add-generic-password -a "$USER" -s 'FIELDREADY_ADMIN_TOKEN' -w '<paste the same token>'
+   ```
+
+After the bindings land, next Pages deploy picks them up. Then:
+
+```bash
+cd scripts
+export ADMIN_TOKEN="$(security find-generic-password -a "$USER" -s 'FIELDREADY_ADMIN_TOKEN' -w)"
+node pull-logs.mjs           # → ./logs.json
+node summarize-logs.mjs      # → markdown report to stdout, paste into Claude
+```
+
 ## Privacy
 
-Every byte of progress data is in the user's browser `localStorage`. Nothing is uploaded, nothing is logged on a server. The only network requests after first load are to `esm.sh` (FSRS library, cached) and Google Fonts (cached). The app works offline after first load.
+Brandi's progress data is hers and Seth's only. Stored client-side in `localStorage` AND copied to a private Cloudflare KV namespace Seth owns. No third-party services in the data path. No analytics tags. The KV namespace is not advertised and the GET endpoint requires the bearer token.
+
+The only OTHER network requests after first load are to `esm.sh` (FSRS library, cached) and Google Fonts (cached). The app works offline after first load — failed `/api/log` POSTs just log a warning and the next session uploads a fresher snapshot anyway.

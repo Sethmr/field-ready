@@ -7,6 +7,7 @@ const STORAGE_KEY = "fieldready.v1";
 const TS_FSRS_URL = "https://esm.sh/ts-fsrs@4.6.1";
 const MASTERY_STABILITY_DAYS = 60;
 const WALL_MAX = 400; // cap wall history so localStorage stays reasonable
+const SYNC_ENDPOINT = "/api/log";
 
 // ─── Default settings ───────────────────────────────────────────────────
 
@@ -20,8 +21,18 @@ const DEFAULT_SETTINGS = {
   showWall: true,
 };
 
+function generateDeviceId() {
+  // Stable per-browser ID. Brandi's iPhone and laptop will register as
+  // separate devices — desired so Seth can tell them apart in the logs.
+  try {
+    if (typeof crypto !== "undefined" && crypto.randomUUID) return crypto.randomUUID();
+  } catch {}
+  return `d-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`;
+}
+
 function defaultState() {
   return {
+    deviceId: generateDeviceId(),
     cards: {},
     streak: 0,
     lastSessionDate: null,
@@ -29,6 +40,7 @@ function defaultState() {
     answerLog: [],
     wall: [],
     settings: { ...DEFAULT_SETTINGS },
+    lastSyncedAt: null,
   };
 }
 
@@ -38,13 +50,40 @@ function loadState() {
     if (!raw) return defaultState();
     const parsed = JSON.parse(raw);
     return {
-      ...defaultState(),
-      ...parsed,
+      ...defaultState(),                              // includes a fresh deviceId
+      ...parsed,                                      // parsed.deviceId wins if present
+      deviceId: parsed.deviceId || generateDeviceId(),
       settings: { ...DEFAULT_SETTINGS, ...(parsed.settings || {}) },
       wall: Array.isArray(parsed.wall) ? parsed.wall : [],
     };
   } catch {
     return defaultState();
+  }
+}
+
+// ─── Sync to Seth ───────────────────────────────────────────────────────
+// Fire-and-forget POST of the entire state to /api/log at session end.
+// Fails silently if offline or if the backend isn't bound — the next
+// sync will catch up since answerLog is append-only.
+
+async function syncToServer(state) {
+  try {
+    const res = await fetch(SYNC_ENDPOINT, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        deviceId: state.deviceId,
+        name: state.settings?.name,
+        ts: Date.now(),
+        state,
+      }),
+      keepalive: true,                          // survives a page unload
+    });
+    if (!res.ok) throw new Error(`sync ${res.status}`);
+    return Date.now();
+  } catch (err) {
+    console.warn("[fieldready] sync failed:", err.message);
+    return null;
   }
 }
 
@@ -326,6 +365,16 @@ function useFieldReady() {
         totalReviewed: s.totalReviewed + reviewed,
       };
     });
+    // Fire-and-forget sync. Done OUTSIDE the setState updater so React's
+    // strict-mode double-invocation doesn't fire the network call twice.
+    // We re-read from stateRef on the next tick so the snapshot we sync
+    // reflects the just-applied update.
+    setTimeout(() => {
+      const snapshot = stateRef.current;
+      syncToServer(snapshot).then(ts => {
+        if (ts) setState(curr => ({ ...curr, lastSyncedAt: ts }));
+      });
+    }, 0);
   }, []);
 
   // ─── Settings ────────────────────────────────────────────────────────

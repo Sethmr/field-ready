@@ -92,3 +92,58 @@ The shared style preamble is `STYLE_PREAMBLE` at the top of the script. If image
 
 If one specific image is wrong, regenerate just that one: `node generate-images.mjs --card septic-001` (omit `--skip-existing`).
 
+---
+
+## pull-logs.mjs
+
+Pulls every captured session-end snapshot from the live `/api/logs` endpoint and writes them to `logs.json` for analysis.
+
+### One-time setup
+
+Cloudflare side (see top-level README "Data capture" section):
+- Create the `fieldready-logs` KV namespace
+- Bind it to the Pages project as `LOGS_KV`
+- Set the `ADMIN_TOKEN` environment variable on the Pages project (Production)
+
+Local side (Keychain stash so you don't have to retype the token):
+
+```bash
+security add-generic-password -a "$USER" -s 'FIELDREADY_ADMIN_TOKEN' -w '<paste the token you set in Pages>'
+```
+
+### Run
+
+```bash
+export ADMIN_TOKEN="$(security find-generic-password -a "$USER" -s 'FIELDREADY_ADMIN_TOKEN' -w)"
+
+node pull-logs.mjs                       # writes ./logs.json (default)
+node pull-logs.mjs --jsonl > logs.jsonl  # one JSON object per line
+node pull-logs.mjs --metadata            # KV metadata only (small, fast)
+node pull-logs.mjs --since 1750000000000 # entries newer than this ms timestamp
+node pull-logs.mjs --device <uuid>       # one device only
+```
+
+Each entry is one session-end snapshot of Brandi's full state. The latest snapshot per device contains all prior history (the `answerLog` inside is monotonically growing).
+
+---
+
+## summarize-logs.mjs
+
+Turns `logs.json` into a markdown report you paste straight into Claude. Per card it computes total attempts, the rating histogram, how many variants she's answered Good or Easy ≥5 times, and FSRS stability — then assigns one of four verdicts: **mastered** (FSRS stability ≥60d, or all variants past the 5× threshold), **in progress**, **struggling** (≥3 'Again' in last 10), or **new**.
+
+```bash
+node summarize-logs.mjs           # markdown report to stdout
+node summarize-logs.mjs --json    # machine-readable variant
+node summarize-logs.mjs --device <uuid>   # one device only
+```
+
+The report ends with suggested Claude prompts: *"suggest 5 new cards in the topic areas Brandi is struggling with"*, *"identify cards to retire"*, *"are there topic gaps in the deck?"*, etc.
+
+Pipe into pbcopy on macOS to skip a step:
+
+```bash
+node pull-logs.mjs && node summarize-logs.mjs | pbcopy
+# now paste into Claude
+```
+
+
