@@ -3,7 +3,7 @@
 const PACK_HUE = {
   septic: 28, wells: 200, foundations: 14, logs: 36, older: 220,
   hvac: 188, forms: 320, cma: 162, helene: 0, ego: 270,
-  land: 100, inspect: 280,
+  land: 100, inspect: 280, wnc: 150, str: 50, closing: 340,
 };
 
 const PACK_SHORT = {
@@ -11,6 +11,7 @@ const PACK_SHORT = {
   logs: "Log Homes", older: "Older Homes", hvac: "HVAC",
   forms: "NC Forms", cma: "CMA", helene: "Helene", ego: "Walkthroughs",
   land: "Land", inspect: "Inspections",
+  wnc: "WNC Climate", str: "STR Investor", closing: "Closing",
 };
 
 function useMediaQuery(query) {
