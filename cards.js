@@ -3,6 +3,15 @@
 // Topics: NC septic, wells, mountain foundations, log homes, older home systems,
 // roofing & HVAC, NC listing forms, CMA & net sheet, post-Helene & insurance,
 // and the "ego question" walkthrough patterns.
+//
+// CARD SHAPE — two forms supported:
+//   Flat:     { id, pack, front, back }                  // current shape
+//   Variants: { id, pack, variants: [{id, front, back}] }
+//
+// The flat shape is treated as a single variant with id "v0". The Anthropic-
+// powered generation script in scripts/generate-variants.mjs upgrades cards
+// in-place to the variants shape — adding 10–20 reworded variants per card so
+// the user can't memorize the surface form. See README.md for the rationale.
 
 export const SEED_CARDS = [
   // ─── NC Septic (12) ─────────────────────────────────────────────────────

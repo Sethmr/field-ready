@@ -1,0 +1,13 @@
+{
+  "name": "fieldready-scripts",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Offline tooling for FieldReady (variant generation, etc.). Not bundled into the app.",
+  "scripts": {
+    "generate-variants": "node generate-variants.mjs"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.30.0"
+  }
+}

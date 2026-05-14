@@ -116,6 +116,22 @@ function isNew(cardId) {
 
 // ─── Counts for home view ──────────────────────────────────────────────────
 
+// ─── Variants ──────────────────────────────────────────────────────────────
+// Cards may be flat ({front,back}) or carry a variants array. Normalize both
+// to a list of {id, front, back}. Flat cards become a single "v0" variant.
+
+function getVariants(card) {
+  if (Array.isArray(card.variants) && card.variants.length > 0) {
+    return card.variants;
+  }
+  return [{ id: "v0", front: card.front, back: card.back }];
+}
+
+function pickVariant(card) {
+  const variants = getVariants(card);
+  return variants[Math.floor(Math.random() * variants.length)];
+}
+
 function countDue() {
   const now = new Date();
   return SEED_CARDS.filter(c => isDue(c.id, now)).length;
@@ -151,7 +167,10 @@ function buildSession({ pullNewIfEmpty = false } = {}) {
   }
 
   return {
-    queue: queue.map(c => ({ cardId: c.id })),
+    queue: queue.map(c => {
+      const v = pickVariant(c);
+      return { cardId: c.id, variantId: v.id, front: v.front, back: v.back };
+    }),
     idx: 0,
     reviewed: 0,
   };
@@ -206,10 +225,16 @@ function rateCurrent(rating) {
     ts: now.toISOString(),
   });
 
-  // If "Again" — push back into the queue ~3 cards later for re-attempt this session.
+  // If "Again" — push back into the queue ~3 cards later for re-attempt this
+  // session. Reuses the same variant the user just failed on.
   if (rating === 1) {
     const reinsertIdx = Math.min(session.queue.length, session.idx + 3);
-    session.queue.splice(reinsertIdx, 0, { cardId });
+    session.queue.splice(reinsertIdx, 0, {
+      cardId,
+      variantId: entry.variantId,
+      front: entry.front,
+      back: entry.back,
+    });
   }
 
   session.idx += 1;
@@ -330,8 +355,8 @@ function renderReview() {
   document.getElementById("progress-total").textContent = String(session.queue.length);
   document.getElementById("pack-pill").textContent = PACKS[card.pack]?.name || card.pack;
 
-  document.getElementById("card-front").textContent = card.front;
-  document.getElementById("card-back").textContent = card.back;
+  document.getElementById("card-front").textContent = entry.front;
+  document.getElementById("card-back").textContent = entry.back;
   document.getElementById("card-back").hidden = true;
   document.getElementById("reveal-btn").hidden = false;
   document.getElementById("rate-row").hidden = true;
