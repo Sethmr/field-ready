@@ -98,7 +98,8 @@ function formatCard(card, packKey) {
   const variants = card.variants
     .map(v => `    { id: ${JSON.stringify(v.id)}, front: ${JSON.stringify(v.front)}, back: ${JSON.stringify(v.back)} }`)
     .join(",\n");
-  return `  { id: ${JSON.stringify(card.id)}, pack: ${JSON.stringify(card.pack)}, variants: [\n${variants}\n  ] }`;
+  const imageField = card.image ? `image: ${JSON.stringify(card.image)}, ` : "";
+  return `  { id: ${JSON.stringify(card.id)}, pack: ${JSON.stringify(card.pack)}, ${imageField}variants: [\n${variants}\n  ] }`;
 }
 
 function formatCardsFile(cards, packs) {

@@ -47,3 +47,48 @@ Sonnet 4.6 is ~$3 per 1M input tokens and ~$15 per 1M output. A full 78-card × 
 The system prompt lives at the top of `generate-variants.mjs`. If variants come out too similar to the original, push harder on "Reframe the question" and "Reorder facts." If variants drift technically, push harder on "PRESERVE all technical correctness."
 
 Don't lower temperature unless variants stop varying — defaults work fine.
+
+---
+
+## generate-images.mjs
+
+Generates one cohesive illustration per card and writes it to `../images/{cardId}.png`. Each card gets an `image` field added in `../cards.js`. The app shows the image at the top of the review card.
+
+**Why pre-generate?** Same reason as variants — the app stays static, costs $0 at runtime, and you can swap any image you don't like by replacing the file.
+
+### One-time setup
+
+```bash
+cd scripts
+npm install      # already done if you ran generate-variants.mjs
+```
+
+You'll need an OpenAI API key (the script uses Anthropic to distill the visual prompt, then OpenAI's gpt-image-1 to draw it). Stash in Keychain:
+
+```bash
+security add-generic-password -a "$USER" -s 'OPENAI_API_KEY' -w 'sk-proj-xxxxx'
+```
+
+### Run
+
+```bash
+export ANTHROPIC_API_KEY="$(security find-generic-password -a "$USER" -s 'ANTHROPIC_API_KEY' -w)"
+export OPENAI_API_KEY="$(security find-generic-password -a "$USER" -s 'OPENAI_API_KEY' -w)"
+
+node generate-images.mjs --card septic-001 --dry-run    # prints the distilled prompt, doesn't draw
+node generate-images.mjs --card septic-001              # draws one image
+node generate-images.mjs                                # full deck
+node generate-images.mjs --skip-existing                # resume after a failure
+node generate-images.mjs --quality medium               # default low; medium ~4x cost, high ~15x
+```
+
+### Cost
+
+Default quality (`low`): ~$1 for 84 cards. Bumping to `medium` is ~$4; `high` is ~$15. Quality `low` is plenty for a personal-use flashcard image.
+
+### Iterating on style
+
+The shared style preamble is `STYLE_PREAMBLE` at the top of the script. If images come out off-tone, edit it and re-run with `--card <id>` on a few examples to dial it in before the full sweep.
+
+If one specific image is wrong, regenerate just that one: `node generate-images.mjs --card septic-001` (omit `--skip-existing`).
+

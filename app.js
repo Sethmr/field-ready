@@ -355,6 +355,17 @@ function renderReview() {
   document.getElementById("progress-total").textContent = String(session.queue.length);
   document.getElementById("pack-pill").textContent = PACKS[card.pack]?.name || card.pack;
 
+  const imgWrap = document.getElementById("card-image-wrap");
+  const img = document.getElementById("card-image");
+  if (card.image) {
+    img.src = card.image;
+    img.alt = "";
+    imgWrap.hidden = false;
+  } else {
+    img.removeAttribute("src");
+    imgWrap.hidden = true;
+  }
+
   document.getElementById("card-front").textContent = entry.front;
   document.getElementById("card-back").textContent = entry.back;
   document.getElementById("card-back").hidden = true;

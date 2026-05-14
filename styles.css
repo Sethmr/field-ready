@@ -337,13 +337,41 @@ html, body {
   background: var(--bg-card);
   border: 1px solid var(--border);
   border-radius: var(--r-lg);
-  padding: 28px 24px;
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 20px;
   min-height: 240px;
   box-shadow: var(--shadow-md);
+  overflow: hidden;
+}
+
+.card-image {
+  margin: 0;
+  display: block;
+  background: var(--bg-elev);
+  border-bottom: 1px solid var(--border);
+  aspect-ratio: 3 / 2;
+  overflow: hidden;
+}
+
+.card-image img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center;
+}
+
+.card-front {
+  padding: 28px 24px 20px;
+}
+
+.card-image + .card-front {
+  padding-top: 24px;
+}
+
+.card-back {
+  padding: 0 24px 28px;
 }
 
 .card-front {
