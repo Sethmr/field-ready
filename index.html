@@ -65,6 +65,11 @@
       border-radius: 8px;
     }
     input[type="range"]:focus { outline: none; }
+
+    /* Touch-only devices: hide keyboard shortcut hints (SPACE, etc.) */
+    @media (hover: none) and (pointer: coarse) {
+      .kbd-hint { display: none !important; }
+    }
   </style>
 </head>
 <body>
@@ -90,5 +95,17 @@
   <script type="text/babel" src="state.jsx"></script>
   <script type="text/babel" src="views.jsx"></script>
   <script type="text/babel" src="app.jsx"></script>
+
+  <!-- Service worker for offline mode. Registers after the page has loaded
+       so it doesn't compete with the initial paint. -->
+  <script>
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker.register("sw.js").catch(err => {
+          console.warn("SW registration failed:", err);
+        });
+      });
+    }
+  </script>
 </body>
 </html>

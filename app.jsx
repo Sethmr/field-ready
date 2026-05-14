@@ -76,6 +76,14 @@ function App() {
     if (!fr.fsrs) return; // not yet loaded
     const queue = fr.buildSession(opts);
     if (queue.length === 0) return;
+    // Preload session images so the first card doesn't show a fetch flash
+    // and subsequent cards feel instant. Browsers fetch in parallel.
+    for (const entry of queue) {
+      if (entry.image) {
+        const img = new Image();
+        img.src = entry.image;
+      }
+    }
     setSession({ queue, idx: 0, reviewed: 0, marks: [] });
     setView("review");
   }

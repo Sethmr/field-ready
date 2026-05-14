@@ -3,12 +3,14 @@
 const PACK_HUE = {
   septic: 28, wells: 200, foundations: 14, logs: 36, older: 220,
   hvac: 188, forms: 320, cma: 162, helene: 0, ego: 270,
+  land: 100, inspect: 280,
 };
 
 const PACK_SHORT = {
   septic: "Septic", wells: "Wells", foundations: "Foundations",
   logs: "Log Homes", older: "Older Homes", hvac: "HVAC",
   forms: "NC Forms", cma: "CMA", helene: "Helene", ego: "Walkthroughs",
+  land: "Land", inspect: "Inspections",
 };
 
 function useMediaQuery(query) {
@@ -701,7 +703,7 @@ function ReviewView({ palette, fr, session, setSession, onExit, onFinish }) {
 
 function KbdHint({ children, palette }) {
   return (
-    <span style={{
+    <span className="kbd-hint" style={{
       marginLeft: 8,
       opacity: 0.6,
       fontSize: 11,
