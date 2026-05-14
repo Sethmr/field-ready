@@ -1,7 +1,0 @@
-{
-  "name": "fieldready",
-  "version": "0.1.0",
-  "private": true,
-  "type": "module",
-  "description": "Static spaced-repetition app for WNC listing-agent fluency. No build step; just open index.html. The 'type:module' field exists solely so the offline scripts/ tooling can dynamic-import cards.js as an ES module — browsers don't read this file."
-}

@@ -3,128 +3,92 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <meta name="theme-color" content="#0f1419" />
-  <title>FieldReady — WNC Listing Agent Drills</title>
-  <meta name="description" content="Spaced-repetition flashcards for the on-site fluency every WNC listing agent needs. Septic, wells, log homes, NC forms, post-Helene." />
-  <link rel="stylesheet" href="styles.css" />
+  <meta name="theme-color" content="#F4ECDD" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="FieldReady" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" href="icon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="icon.svg" />
+  <meta name="description" content="On-site fluency for WNC listing agents — septic, wells, log homes, NC forms, post-Helene." />
+  <title>FieldReady</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Manrope:wght@400;500;600;700&family=Caveat:wght@400;500;600;700&display=swap">
+
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      min-height: 100vh;
+      min-height: 100dvh;
+      font-family: 'Manrope', system-ui, sans-serif;
+      background: radial-gradient(circle at 30% 20%, #E9DDC4 0%, #D6C8AC 45%, #BFAE8F 100%);
+      color: #22201D;
+      -webkit-font-smoothing: antialiased;
+      overscroll-behavior: none;
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+
+    /* Keyframes shared across files */
+    @keyframes stamp-pop {
+      0%   { transform: var(--stamp-transform, scale(0.4)); opacity: 0; }
+      55%  { opacity: 1; }
+      100% { transform: var(--stamp-transform, scale(1)); opacity: 1; }
+    }
+    @keyframes fade-up {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes slide-up {
+      from { opacity: 0; transform: translateY(40px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    #app-root { position: relative; z-index: 1; }
+
+    /* Tasteful scrollbar */
+    *::-webkit-scrollbar { width: 8px; height: 8px; }
+    *::-webkit-scrollbar-track { background: transparent; }
+    *::-webkit-scrollbar-thumb {
+      background: rgba(0,0,0,0.15);
+      border-radius: 999px;
+    }
+    *::-webkit-scrollbar-thumb:hover { background: rgba(0,0,0,0.3); }
+
+    /* Subtle native input focus rings */
+    input:focus, button:focus-visible {
+      outline: 2px solid #C45A2A;
+      outline-offset: 2px;
+      border-radius: 8px;
+    }
+    input[type="range"]:focus { outline: none; }
+  </style>
 </head>
 <body>
-  <main id="app" class="app" aria-live="polite">
-    <!-- Home view -->
-    <section id="view-home" class="view view--home">
-      <header class="home-header">
-        <h1 class="brand">FieldReady<span class="brand-dot">.</span></h1>
-        <p class="tagline">On-site fluency for WNC listing agents.</p>
-      </header>
+  <div id="app-root"></div>
 
-      <div class="stats">
-        <div class="stat">
-          <span class="stat-num" id="stat-due">0</span>
-          <span class="stat-label">Due now</span>
-        </div>
-        <div class="stat">
-          <span class="stat-num" id="stat-streak">0</span>
-          <span class="stat-label">Day streak</span>
-        </div>
-        <div class="stat">
-          <span class="stat-num" id="stat-mastered">0</span>
-          <span class="stat-label">Mastered</span>
-        </div>
-      </div>
+  <!-- React -->
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
 
-      <button id="start-btn" class="btn btn--primary">Start session</button>
-      <p class="empty-msg" id="empty-msg" hidden>
-        Nothing due. Come back later — or pull a few new cards anyway.
-      </p>
-      <button id="start-anyway-btn" class="btn btn--ghost" hidden>Pull a few anyway</button>
+  <!-- Card data (assigns window.SEED_CARDS and window.PACKS) -->
+  <script src="cards-data.js"></script>
 
-      <details class="packs">
-        <summary>Topics in this deck</summary>
-        <ul id="pack-list"></ul>
-      </details>
+  <!-- Load FSRS as an ES module BEFORE Babel scripts run, so the Promise
+       is in flight by the time the app needs it. -->
+  <script type="module">
+    window.__fsrsPromise = import('https://esm.sh/ts-fsrs@4.6.1')
+      .catch(err => { console.error('FSRS module load failed:', err); throw err; });
+  </script>
 
-      <details class="settings">
-        <summary>Settings</summary>
-        <div class="settings-body">
-          <label class="setting-row">
-            <span>New cards per session</span>
-            <input id="new-per-session" type="number" min="1" max="20" value="5" />
-          </label>
-          <label class="setting-row">
-            <span>Max reviews per session</span>
-            <input id="max-reviews" type="number" min="5" max="200" value="40" />
-          </label>
-          <p class="setting-meta"><span id="log-count">0</span> answers logged on this device.</p>
-          <button id="reset-btn" class="btn btn--danger-text">Erase weakness profile…</button>
-        </div>
-      </details>
-
-      <footer class="foot">
-        <span>v0.1 · local-only · no account · keyboard: <kbd>space</kbd> reveal · <kbd>1</kbd>–<kbd>4</kbd> rate</span>
-      </footer>
-    </section>
-
-    <!-- Review view -->
-    <section id="view-review" class="view view--review" hidden>
-      <header class="review-header">
-        <button id="back-btn" class="btn btn--ghost btn--sm">← Done</button>
-        <div class="progress">
-          <span id="progress-current">1</span> / <span id="progress-total">1</span>
-        </div>
-        <div class="pack-pill" id="pack-pill">—</div>
-      </header>
-
-      <article class="card" id="card">
-        <figure class="card-image" id="card-image-wrap" hidden>
-          <img id="card-image" alt="" />
-        </figure>
-        <div class="card-front" id="card-front"></div>
-        <div class="card-back" id="card-back" hidden></div>
-      </article>
-
-      <div class="review-actions">
-        <button id="reveal-btn" class="btn btn--primary btn--wide">Show answer <span class="kbd-hint">space</span></button>
-        <div id="rate-row" class="rate-row" hidden>
-          <button class="btn btn--rate btn--again" data-rating="1">
-            <span class="rate-num">1</span>
-            <span class="rate-label">Again</span>
-            <span class="rate-interval" data-interval="1"></span>
-          </button>
-          <button class="btn btn--rate btn--hard" data-rating="2">
-            <span class="rate-num">2</span>
-            <span class="rate-label">Hard</span>
-            <span class="rate-interval" data-interval="2"></span>
-          </button>
-          <button class="btn btn--rate btn--good" data-rating="3">
-            <span class="rate-num">3</span>
-            <span class="rate-label">Good</span>
-            <span class="rate-interval" data-interval="3"></span>
-          </button>
-          <button class="btn btn--rate btn--easy" data-rating="4">
-            <span class="rate-num">4</span>
-            <span class="rate-label">Easy</span>
-            <span class="rate-interval" data-interval="4"></span>
-          </button>
-        </div>
-      </div>
-    </section>
-
-    <!-- Done view -->
-    <section id="view-done" class="view view--done" hidden>
-      <h2>Session complete</h2>
-      <p class="done-stats">
-        <strong id="done-count">0</strong> cards reviewed today.<br />
-        Streak: <strong id="done-streak">0</strong> days.
-      </p>
-      <button id="home-btn" class="btn btn--primary">Back to home</button>
-    </section>
-
-    <!-- Loading state -->
-    <section id="view-loading" class="view view--loading" hidden>
-      <p>Loading scheduler…</p>
-    </section>
-  </main>
-
-  <script type="module" src="app.js"></script>
+  <!-- App layers -->
+  <script type="text/babel" src="stamps.jsx"></script>
+  <script type="text/babel" src="state.jsx"></script>
+  <script type="text/babel" src="views.jsx"></script>
+  <script type="text/babel" src="app.jsx"></script>
 </body>
 </html>

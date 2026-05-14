@@ -1,0 +1,19 @@
+{
+  "name": "FieldReady",
+  "short_name": "FieldReady",
+  "description": "On-site fluency for WNC listing agents.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#F4ECDD",
+  "theme_color": "#F4ECDD",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "type": "image/svg+xml",
+      "sizes": "any",
+      "purpose": "any maskable"
+    }
+  ]
+}

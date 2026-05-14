@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="112" fill="#F4ECDD"></rect>
+  <g transform="translate(140 120) rotate(-6 140 140)">
+    <path d="M 30 200 Q 60 220 100 270 Q 110 285 122 278 Q 170 200 280 80" stroke="#C45A2A" stroke-width="34" stroke-linecap="round" stroke-linejoin="round" fill="none"></path>
+  </g>
+  <text x="50%" y="430" text-anchor="middle" font-family="Newsreader, Georgia, serif" font-size="60" fill="#22201D" font-weight="500">FieldReady</text>
+</svg>

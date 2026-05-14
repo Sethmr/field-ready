@@ -27,7 +27,7 @@ import { dirname, resolve } from "node:path";
 import Anthropic from "@anthropic-ai/sdk";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const CARDS_PATH = resolve(__dirname, "..", "cards.js");
+const CARDS_PATH = resolve(__dirname, "..", "cards-data.js");
 
 // ─── Arg parsing ───────────────────────────────────────────────────────────
 
@@ -83,14 +83,22 @@ Generate ${n} variants in JSON.`;
 
 // ─── Card-file IO ──────────────────────────────────────────────────────────
 //
-// We don't want to lose the formatting of cards.js (it's hand-curated). The
-// safest approach: import the module dynamically to read it, then write back
-// a programmatically-formatted version. Acceptable trade-off — the diff will
-// be large the first run, but subsequent runs will be small.
+// cards-data.js is a classic browser script that assigns window.SEED_CARDS
+// and window.PACKS. We read it as text and run it in a sandboxed Function
+// against a fake `window` to extract the data, then write back a
+// programmatically-formatted version preserving the same shape.
 
 async function loadCards() {
-  const mod = await import(CARDS_PATH);
-  return { cards: mod.SEED_CARDS, packs: mod.PACKS };
+  const text = await readFile(CARDS_PATH, "utf8");
+  const fakeWindow = {};
+  // Wrap in a try block inside the Function so a malformed file gives a
+  // helpful error rather than failing at function compile time.
+  const fn = new Function("window", text);
+  fn(fakeWindow);
+  if (!Array.isArray(fakeWindow.SEED_CARDS)) {
+    throw new Error(`${CARDS_PATH} did not assign window.SEED_CARDS to an array`);
+  }
+  return { cards: fakeWindow.SEED_CARDS, packs: fakeWindow.PACKS || {} };
 }
 
 function formatCard(card, packKey) {
@@ -123,15 +131,15 @@ function formatCardsFile(cards, packs) {
 // the file structure (script regenerates it). Hand-edit individual variants
 // freely if you spot a technical inaccuracy.
 //
-// Re-running the script OVERWRITES variants on the targeted cards. Scope with
-// --card or --pack while iterating; hand-edits should be made after the final
-// generation pass.
+// Loaded into the browser via a classic <script src="cards-data.js"></script>
+// tag, which is why this file assigns to window globals rather than using
+// ES module exports.
 
-export const SEED_CARDS = [
+window.SEED_CARDS = [
 ${sections}
 ];
 
-export const PACKS = ${packsJson};
+window.PACKS = ${packsJson};
 `;
 }
 

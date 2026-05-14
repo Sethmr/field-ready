@@ -5,7 +5,7 @@
 // DO NOT hand-format the file structure (scripts regenerate it). Hand-edit
 // individual variants or swap an image freely if you spot a problem.
 
-export const SEED_CARDS = [
+window.SEED_CARDS = [
   // ─── NC Septic & Permits (12) ─────────────────────────────────────
   { id: "septic-001", pack: "septic", image: "images/septic-001.png", variants: [
     { id: "v0", front: "When did NC's biggest septic rule overhaul in 34 years take effect?", back: "January 1, 2024 (15A NCAC 18E)." },
@@ -1119,7 +1119,7 @@ export const SEED_CARDS = [
   ] }
 ];
 
-export const PACKS = {
+window.PACKS = {
     "septic": {
       "name": "NC Septic & Permits",
       "emoji": "S"

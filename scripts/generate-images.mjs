@@ -41,7 +41,7 @@ import { constants as fsConstants } from "node:fs";
 import Anthropic from "@anthropic-ai/sdk";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const CARDS_PATH = resolve(__dirname, "..", "cards.js");
+const CARDS_PATH = resolve(__dirname, "..", "cards-data.js");
 const IMAGES_DIR = resolve(__dirname, "..", "images");
 
 // ─── Arg parsing ───────────────────────────────────────────────────────────
@@ -164,10 +164,20 @@ async function fileExists(path) {
 }
 
 // ─── Card-file IO (shared shape with generate-variants.mjs) ────────────────
+//
+// cards-data.js is a classic browser script that assigns window.SEED_CARDS
+// and window.PACKS. We read it as text and run it in a Function sandbox
+// against a fake `window` to extract the data.
 
 async function loadCards() {
-  const mod = await import(CARDS_PATH);
-  return { cards: mod.SEED_CARDS, packs: mod.PACKS };
+  const text = await readFile(CARDS_PATH, "utf8");
+  const fakeWindow = {};
+  const fn = new Function("window", text);
+  fn(fakeWindow);
+  if (!Array.isArray(fakeWindow.SEED_CARDS)) {
+    throw new Error(`${CARDS_PATH} did not assign window.SEED_CARDS to an array`);
+  }
+  return { cards: fakeWindow.SEED_CARDS, packs: fakeWindow.PACKS || {} };
 }
 
 function formatCard(card) {
@@ -199,11 +209,11 @@ function formatCardsFile(cards, packs) {
 // DO NOT hand-format the file structure (scripts regenerate it). Hand-edit
 // individual variants or swap an image freely if you spot a problem.
 
-export const SEED_CARDS = [
+window.SEED_CARDS = [
 ${sections}
 ];
 
-export const PACKS = ${packsJson};
+window.PACKS = ${packsJson};
 `;
 }
 
