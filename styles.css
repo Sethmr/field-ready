@@ -211,6 +211,13 @@ html, body {
   color: var(--text);
 }
 
+.setting-meta {
+  margin: 0;
+  font-size: 12px;
+  color: var(--text-faint);
+  font-variant-numeric: tabular-nums;
+}
+
 .setting-row input {
   width: 70px;
   padding: 6px 8px;

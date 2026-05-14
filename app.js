@@ -32,6 +32,11 @@ function defaultState() {
     streak: 0,
     lastSessionDate: null,   // YYYY-MM-DD of last completed session
     totalReviewed: 0,
+    // Append-only log of every rating ever given. Source of truth for the
+    // user's weakness profile and feeds the future AI-reword round system.
+    // Schema: { cardId, variantId, rating, ts } where variantId is the
+    // wording variant shown ("v0" = original).
+    answerLog: [],
     settings: {
       newPerSession: 5,
       maxReviews: 40,
@@ -91,12 +96,18 @@ function isDue(cardId, now) {
   return new Date(raw.due) <= now;
 }
 
+// Mastery threshold (days of FSRS stability). Set at 60d to roughly align
+// with the consolidation window where spaced-repetition research treats
+// material as durably encoded into long-term memory (multiple successful
+// recalls across at least a month, FSRS stability ≥ 60 ⇒ 90% expected
+// recall after 60 days). Tunable.
+const MASTERY_STABILITY_DAYS = 60;
+
 function isMastered(cardId) {
   const raw = state.cards[cardId];
   if (!raw) return false;
   // FSRS State: 0=New, 1=Learning, 2=Review, 3=Relearning
-  // Mastered = in Review state with stability >= 21 days (~3 weeks)
-  return raw.state === 2 && raw.stability >= 21;
+  return raw.state === 2 && raw.stability >= MASTERY_STABILITY_DAYS;
 }
 
 function isNew(cardId) {
@@ -186,6 +197,14 @@ function rateCurrent(rating) {
   const result = scheduler.next(card, now, rating);
   state.cards[cardId] = serializeCard(result.card);
   session.reviewed += 1;
+
+  // Append-only log of this answer. Drives the future AI-reword round system.
+  state.answerLog.push({
+    cardId,
+    variantId: entry.variantId || "v0",
+    rating,
+    ts: now.toISOString(),
+  });
 
   // If "Again" — push back into the queue ~3 cards later for re-attempt this session.
   if (rating === 1) {
@@ -298,6 +317,7 @@ function renderHome() {
   // Settings inputs.
   document.getElementById("new-per-session").value = state.settings.newPerSession;
   document.getElementById("max-reviews").value = state.settings.maxReviews;
+  document.getElementById("log-count").textContent = String(state.answerLog?.length || 0);
 }
 
 function renderReview() {
@@ -390,7 +410,10 @@ function wire() {
   });
 
   document.getElementById("reset-btn").addEventListener("click", () => {
-    if (!confirm("Reset all FieldReady progress on this device? This can't be undone.")) return;
+    const typed = prompt(
+      "This wipes every answer logged on this device — your weakness profile, scheduling, the works. Can't be undone.\n\nType RESET to confirm:"
+    );
+    if (typed !== "RESET") return;
     localStorage.removeItem(STORAGE_KEY);
     state = loadState();
     renderHome();
