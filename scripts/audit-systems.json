@@ -1,0 +1,64 @@
+{
+  "summary": {
+    "total": 68,
+    "correct": 62,
+    "minor": 5,
+    "incorrect": 1
+  },
+  "issues": [
+    {
+      "id": "older-013",
+      "pack": "older",
+      "verdict": "MINOR_ISSUE",
+      "front": "Standing-seam metal roof — three install types ranked by quality?",
+      "back": "Best to worst: mechanical seam (factory-locked, $12–20/sqft) > snap-lock (concealed fastener, $10–14/sqft) > 5V crimp exposed-fastener ($6–10/sqft, watch for fastener back-out as it ages).",
+      "issue": "5V crimp is technically NOT a standing-seam profile — it's a through-fastened (exposed-fastener) corrugated panel. Standing-seam by definition uses raised, mechanically joined or snap-locked seams with concealed fasteners. Lumping 5V crimp under 'standing-seam' is a category error a roofer or knowledgeable buyer will catch.",
+      "suggested_fix": "Best to worst: mechanical-seam standing-seam (factory-locked, $12–20/sqft) > snap-lock standing-seam (concealed fastener, $10–14/sqft) > 5V crimp (exposed-fastener through-panel, technically not standing-seam, $6–10/sqft, watch for fastener back-out as it ages)."
+    },
+    {
+      "id": "older-014",
+      "pack": "older",
+      "verdict": "MINOR_ISSUE",
+      "front": "Why is ice-and-water shield critical on a WNC roof?",
+      "back": "At elevation, ice dams form at the eaves when warm attic air melts snow that refreezes at the cold edge. The self-adhering membrane prevents the resulting backup from leaking through the sheathing. NC code requires at least 24\" up-slope past the heated wall in colder zones.",
+      "issue": "NC Residential Code R905.1.2 (mirroring IRC) specifies the membrane extend not less than 24 inches inside the EXTERIOR wall line, not the 'heated wall.' In most homes these are the same plane, but in homes with unheated additions, garages, or porches under the same roof, the distinction matters and an inspector will flag it.",
+      "suggested_fix": "At elevation, ice dams form at the eaves when warm attic air melts snow that refreezes at the cold edge. The self-adhering membrane prevents the resulting backup from leaking through the sheathing. NC code requires the membrane to extend at least 24\" up-slope past the interior face of the exterior wall in colder zones."
+    },
+    {
+      "id": "hvac-007",
+      "pack": "hvac",
+      "verdict": "MINOR_ISSUE",
+      "front": "Heat pump SEER and HSPF — what they mean and what's good today?",
+      "back": "SEER = Seasonal Energy Efficiency Ratio (cooling); HSPF = Heating Seasonal Performance Factor. As of 2023, NC minimums are SEER 14.3 / HSPF 8.8. Pre-2015 units are commonly SEER 10–13, meaningfully less efficient.",
+      "issue": "The two numbers cited mix old and new metrics. As of Jan 1 2023, federal minimums switched to the SEER2/HSPF2 testing standard. The correct 2023+ minimum for split heat pumps is either SEER2 14.3 / HSPF2 7.5 (new metric) OR equivalently SEER 15 / HSPF 8.8 (old metric). 'SEER 14.3 / HSPF 8.8' pairs the new SEER2 value with the old HSPF value — an HVAC pro will catch this.",
+      "suggested_fix": "SEER = Seasonal Energy Efficiency Ratio (cooling); HSPF = Heating Seasonal Performance Factor. As of Jan 2023 the federal test standard switched to SEER2/HSPF2 — the heat pump minimum is SEER2 14.3 / HSPF2 7.5 (equivalent to old SEER 15 / HSPF 8.8). Pre-2015 units are commonly SEER 10–13, meaningfully less efficient."
+    },
+    {
+      "id": "hvac-011",
+      "pack": "hvac",
+      "verdict": "INCORRECT",
+      "front": "AC/heat-pump refrigerant types — R-22 vs. R-410A vs. R-454B?",
+      "back": "R-22 (Freon): pre-2010, ozone-depleting, banned for new equipment 2020. R-410A (Puron): 2010–2024 standard. R-454B (Opteon XL41) and R-32: 2025+ phased in. Old R-22 systems are increasingly expensive to recharge ($200–500 per pound; system holds 4–8 lbs). Flag R-22 = replace soon.",
+      "issue": "The R-22 ban dates are reversed/wrong. Per EPA Clean Air Act §605: R-22 was banned for use in NEW equipment manufactured after Jan 1, 2010 (no new R-22 systems could be sold/installed after that date). Then PRODUCTION and IMPORT of new R-22 was banned Jan 1, 2020. So R-22 was banned in new equipment in 2010, not 2020. The card has it backwards.",
+      "suggested_fix": "R-22 (Freon): pre-2010, ozone-depleting, banned in new equipment 2010, production/import banned 2020. R-410A (Puron): 2010–2024 standard. R-454B (Opteon XL41) and R-32: 2025+ phased in. Old R-22 systems are increasingly expensive to recharge ($200–500 per pound; system holds 4–8 lbs). Flag R-22 = replace soon."
+    },
+    {
+      "id": "ego-003",
+      "pack": "ego",
+      "verdict": "MINOR_ISSUE",
+      "front": "Buyer asks: 'What's the GPM on this well?' Confident reply?",
+      "back": "\"I'll request the most recent flow test from the seller. FHA wants 3–5 sustained; I aim for 5+ for resale.\"",
+      "issue": "FHA/HUD's actual minimum for individual wells (per HUD Handbook 4000.1) is 5 GPM over a 4-hour period for new construction; existing properties must demonstrate adequate continuous supply. The '3–5 sustained' range conflates FHA with general lender/state guidance — strictly, FHA wants 5 GPM. The 3 GPM figure is more often cited as a USDA Rural Development or general 'minimum livable' threshold.",
+      "suggested_fix": "\"I'll request the most recent flow test from the seller. FHA wants 5 GPM sustained; I aim for 5+ for resale.\""
+    },
+    {
+      "id": "ego-020",
+      "pack": "ego",
+      "verdict": "MINOR_ISSUE",
+      "front": "Buyer wants to put in a pool — what's your immediate question?",
+      "back": "Where's the septic and its setback? Pool plus equipment needs to clear: drainfield (50 ft setback typical), reserve area, and well (75–100 ft). On a typical 1/2-acre lot, septic constraints often kill the pool plan. Always check the IP map before promising 'plenty of room.'",
+      "issue": "NC septic setback figures cited are imprecise. Per NC 15A NCAC 18E (effective 2024), the actual rule for swimming pools is typically 25 ft from a septic drainfield/nitrification field (not 50 ft) and 25 ft from the repair area. Wells must be 100 ft from a drainfield (the 75 ft figure is closer to historical Class IV well separation). The 50 ft / 75–100 ft figures will get pushback from a county environmental health specialist.",
+      "suggested_fix": "Where's the septic and its setback? Pool plus equipment needs to clear: drainfield (typically 25 ft per NC 15A NCAC 18E), reserve/repair area (25 ft), and well (typically 100 ft from drainfield). On a typical 1/2-acre lot, septic constraints often kill the pool plan. Always pull the IP (Improvement Permit) and site plan from county environmental health before promising 'plenty of room.'"
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "summary": {
+    "total": 52,
+    "correct": 47,
+    "minor": 4,
+    "incorrect": 1
+  },
+  "issues": [
+    {
+      "id": "str-002",
+      "pack": "str",
+      "verdict": "MINOR_ISSUE",
+      "front": "Total occupancy + sales tax on a NC short-term rental?",
+      "back": "NC state sales tax 6.75% + Macon County occupancy tax 4% = roughly 10.75% on bookings. Owner-collected; remitted to NC DOR + Macon County. Property managers usually handle this; self-managed owners must register.",
+      "issue": "Mislabels the 6.75% as 'NC state sales tax.' The NC state sales tax rate is 4.75%; the 6.75% figure is the COMBINED state (4.75%) + Macon County local sales tax (2%). The 6.75% combined is correct for what's collected, but calling all of it 'state' tax is misleading and could trip an agent up if a client asks for the breakdown.",
+      "suggested_fix": "Reword to: 'NC combined sales tax 6.75% (state 4.75% + Macon County 2%) + Macon County occupancy tax 4% = roughly 10.75% on bookings.'"
+    },
+    {
+      "id": "hoa-012",
+      "pack": "hoa",
+      "verdict": "INCORRECT",
+      "front": "Age-restricted (55+) HOA — what does it actually mean?",
+      "back": "Under federal Housing for Older Persons Act (HOPA): at least 80% of occupied units must have at least one resident age 55+. Community must publish and enforce. Tight restrictions on under-19 occupants. Limits the buyer pool significantly. Disclose age-restriction status in listing remarks.",
+      "issue": "HOPA does not define a federal 'under-19' restriction. HOPA's only federal age threshold is the 55+/80% rule. Each individual community sets its own minimum-age rules for the non-55 occupants in the remaining 20% of units (commonly 18+, 19+, or sometimes no minimum, depending on the community's published policy). Stating 'tight restrictions on under-19 occupants' as if it's a HOPA requirement is inaccurate — it's a community-specific bylaw, not federal law. Several variants (v1, v2, v3, v6, v8, v9) repeat the same error.",
+      "suggested_fix": "Reword to: 'Under federal HOPA: at least 80% of occupied units must have at least one resident age 55+. Community must publish and enforce its age policies. Most communities further restrict minimum ages for occupants in the remaining 20% (often 18+ or 19+, set by community bylaws). Limits the buyer pool; disclose age-restriction status in listing remarks.'"
+    },
+    {
+      "id": "wnc-004",
+      "pack": "wnc",
+      "verdict": "MINOR_ISSUE",
+      "front": "Snow load expectations in mountain Macon County — what should you flag?",
+      "back": "NC mountain code typically calls for 30–40 psf ground snow load depending on elevation. Above 4,000 ft, look for engineered roof structures or steeper pitches. Older flat-roofed cabins at altitude are a real winter risk.",
+      "issue": "30–40 psf is on the low end for higher-elevation Macon County. NC Building Code adopts the ASCE 7 ground-snow-load map; for the highest WNC elevations in Macon, Jackson, and Haywood counties, ground snow loads can run 35–50+ psf, with site-specific case studies required above ~4,500 ft per ASCE 7-16/22 guidance. The 30–40 psf range understates conditions for the 4,500+ ft band the card references.",
+      "suggested_fix": "Reword to: 'NC mountain code typically calls for 30–50+ psf ground snow load depending on elevation, with site-specific engineering required at the highest elevations. Above 4,000 ft, look for engineered roof structures or steeper pitches. Older flat-roofed cabins at altitude are a real winter risk.'"
+    },
+    {
+      "id": "str-001",
+      "pack": "str",
+      "verdict": "MINOR_ISSUE",
+      "front": "Macon County STR (short-term rental) rules — current status?",
+      "back": "Macon County is friendlier to STRs than Buncombe or Highlands. No countywide ban, no countywide permit fee. However, the town of Franklin has zoning-based restrictions in some residential areas, and HOA-governed communities (Mountaintop, Wade Hampton, Highlands CC) often prohibit STRs entirely. Verify per parcel.",
+      "issue": "Mountaintop Golf & Lake Club and Wade Hampton Golf Club are both in Cashiers (Jackson County), not Macon County. Highlands CC straddles the Macon/Jackson line but is most often associated with the town of Highlands (which sits in Macon). Listing all three as 'HOA-governed communities' that the Macon County buyer should verify is reasonable in spirit (a buyer comparing the broader Highlands-Cashiers corridor would encounter all three), but technically Mountaintop and Wade Hampton are NOT Macon County HOAs. Could mislead an agent who thinks all three are inside Macon's jurisdiction.",
+      "suggested_fix": "Reword to: '...HOA-governed communities in the broader Highlands-Cashiers corridor (Highlands CC in Macon; Mountaintop and Wade Hampton in Jackson) often prohibit STRs entirely. Verify per parcel.'"
+    },
+    {
+      "id": "hoa-001",
+      "pack": "hoa",
+      "verdict": "MINOR_ISSUE",
+      "front": "Major gated communities in Macon/Jackson counties Brandi should know cold?",
+      "back": "Highlands CC, Mountaintop Golf & Lake Club, Wade Hampton Golf Club (Cashiers), Lake Toxaway CC, Connestee Falls (Brevard), Cullasaja Club, Bear Lake Reserve, Trillium, Old Edwards Club. Each has distinct HOA rules, fees, and STR/rental restrictions. Listing in any of these = pull the covenants first.",
+      "issue": "Lake Toxaway CC and Connestee Falls are both in Transylvania County (Brevard area), not Macon or Jackson. The card's headline says 'Macon/Jackson counties' but then lists communities outside those counties without clear flagging. Connestee Falls is correctly noted as Brevard, but Lake Toxaway CC is not. Bear Lake Reserve and Trillium are in Jackson (correct). Old Edwards Club sits in Macon (Highlands area), correct. Minor geographic accuracy issue — the headline scope doesn't match the list.",
+      "suggested_fix": "Reword to: 'Major gated communities in the WNC Highlands-Cashiers-Brevard corridor Brandi should know cold: Highlands CC (Macon), Old Edwards Club (Macon), Mountaintop Golf & Lake Club (Jackson), Wade Hampton Golf Club (Jackson, Cashiers), Cullasaja Club (Macon), Bear Lake Reserve (Jackson), Trillium (Jackson), Lake Toxaway CC (Transylvania), Connestee Falls (Transylvania, Brevard). Each has distinct HOA rules, fees, and STR/rental restrictions.'"
+    }
+  ]
+}

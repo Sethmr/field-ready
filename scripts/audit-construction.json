@@ -1,0 +1,73 @@
+{
+  "summary": {
+    "total": 82,
+    "correct": 75,
+    "minor": 5,
+    "incorrect": 2
+  },
+  "issues": [
+    {
+      "id": "septic-016",
+      "pack": "septic",
+      "verdict": "MINOR_ISSUE",
+      "front": "Septic system design capacity in NC — how is it calculated?",
+      "back": "120 gallons per day per bedroom for a typical residential system. 3BR home = 360 gpd design. Larger or higher-use buildings (B&Bs, group homes) require special engineered design. This is why bedroom count is permit-tied — it dictates capacity.",
+      "issue": "The flat '120 gpd per bedroom' rule is from the legacy 15A NCAC 18A. Under 15A NCAC 18E (effective Jan 1, 2024), residential design daily flow is set at a 240 gpd minimum for the first 2 bedrooms plus 60–120 gpd per additional bedroom (and design flow can be reduced based on metered water use under .0840). The simple 120 gpd/BR multiplier overstates required capacity for larger homes under the current rule.",
+      "suggested_fix": "Under 15A NCAC 18E (2024), residential design flow starts at 240 gpd for a 2-bedroom home and adds roughly 60–120 gpd per additional bedroom (the older 120 gpd-per-bedroom figure was a flat rate under the prior 18A rule). Larger or higher-use buildings (B&Bs, group homes) require an engineered design. This is why bedroom count is permit-tied — it dictates capacity."
+    },
+    {
+      "id": "septic-018",
+      "pack": "septic",
+      "verdict": "INCORRECT",
+      "front": "Septic setback rules — distances to property line, well, water bodies?",
+      "back": "Tank: 5 ft from property line typical. Drainfield: 10 ft from property line, 50 ft from a well, 100 ft from any water body or stream. Critical for any new build, addition, or pool. Reduce-these-and-the-permit-is-denied.",
+      "issue": "The drainfield-to-private-well setback in NC is 100 feet, not 50 feet (per 15A NCAC 18E setback tables and 15A NCAC 02C .0107 well rules). The 50 ft figure is for a septic tank to a well, not the drainfield. Telling an agent the drainfield can sit 50 ft from a well is a real field error that could mislead a buyer about whether a lot can support a build.",
+      "suggested_fix": "Tank: 5 ft from property line, 50 ft from a private well. Drainfield: 10 ft from property line, 100 ft from a private well, 50 ft from any stream or water body (greater on classified waters). Critical for any new build, addition, or pool. Reduce these and the permit is denied."
+    },
+    {
+      "id": "well-009",
+      "pack": "wells",
+      "verdict": "INCORRECT",
+      "front": "What's the NC well casing depth requirement, and why does it matter?",
+      "back": "Minimum casing depth is 20 feet below static water level, OR down to competent bedrock — whichever is greater. Most WNC drilled wells far exceed this. Casing shorter than the rule risks surface water contamination of the aquifer.",
+      "issue": "The NC rule (15A NCAC 02C .0107) requires casing to extend at least 20 feet below land surface — not 20 feet below the static water level. In bedrock wells the casing must also extend a minimum into competent rock and be grouted. The 'below static water level' framing materially misstates the standard and would cause an agent to misread a well log.",
+      "suggested_fix": "NC requires well casing to extend at least 20 feet below land surface (15A NCAC 02C .0107). For wells in bedrock, the casing must also seat into competent rock and be properly grouted. Most WNC drilled wells far exceed this. Casing shorter than the rule risks surface water contaminating the aquifer."
+    },
+    {
+      "id": "well-011",
+      "pack": "wells",
+      "verdict": "MINOR_ISSUE",
+      "front": "How do you retrieve a well log for a NC property?",
+      "back": "NC Division of Water Resources keeps drilling records via the Drinking Water Hub; the county environmental health office often has copies too. Wells drilled after 1988 typically have a log on file. Pre-1988 wells frequently have nothing — always disclose if a log is unavailable.",
+      "issue": "The 1988 cutoff is too generous. NC's well-construction record requirements were patchy until the GW-1 well-construction record requirement and statewide electronic submission tightened up in the late 2000s (driven by the 2006 NC Well Construction Act amendments and the GS 87-83.1 framework). Many wells drilled in the 1990s and even early 2000s have no log on file. A safer cutoff for 'reliably has a log' is post-2008 or post-2010, with anything older treated as 'maybe.'",
+      "suggested_fix": "NC Division of Water Resources keeps drilling records (GW-1 well construction records); the county environmental health office often has copies too. Wells drilled after the late 2000s — when statewide electronic submission tightened — usually have a log on file. Older wells frequently have nothing — always disclose if a log is unavailable."
+    },
+    {
+      "id": "well-016",
+      "pack": "wells",
+      "verdict": "MINOR_ISSUE",
+      "front": "Galvanized steel vs. PVC well casing — which is which, which is worse?",
+      "back": "Galvanized: pre-1990 standard, rusts internally, 30–50 year life, often the source of rusty water in older wells. PVC: modern standard, doesn't rust, 75+ year life, cheaper to install. WNC mountain wells in bedrock can use steel for the upper section through soil.",
+      "issue": "Two issues: (1) the older steel casing standard for wells in NC was typically black steel or schedule-40 steel — not 'galvanized' (galvanizing is uncommon for well casing and the zinc coating actually fails fast in groundwater). The rust-causing material is plain carbon steel. (2) Calling PVC the 'modern standard' overstates it for WNC; steel remains the predominant casing material for deep WNC bedrock wells, with PVC more common in shallower settings or as a liner.",
+      "suggested_fix": "Steel (typically black or schedule-40, not galvanized): the long-time standard, rusts internally, 30–50 year life, often the source of rusty water in older wells. PVC: increasingly common on shallower or alternative systems, doesn't rust, 75+ year life, cheaper to install. WNC mountain wells in bedrock still commonly use steel for the upper section through soil with the bedrock interval left as open hole."
+    },
+    {
+      "id": "found-008",
+      "pack": "foundations",
+      "verdict": "MINOR_ISSUE",
+      "front": "What's the NC requirement for a crawlspace vapor barrier?",
+      "back": "6-mil minimum polyethylene sheet on the soil floor, taped seams, extending 6–12 inches up the foundation walls. Code requirement; commonly violated in older homes.",
+      "issue": "The NC residential code (R408.3 / N1102.2.11) requires 6-mil class I vapor retarder with joints lapped (not necessarily taped) at least 6 inches and edges extending up the stem wall and attached. Taped seams are the standard for an encapsulated/sealed crawlspace; in a vented crawlspace, lapped 6 inches is acceptable. The '6–12 inches up the wall' upper bound is also off — sealed crawls require the sheeting to extend to within 6 inches of the top of the wall, not be capped at 12 inches.",
+      "suggested_fix": "6-mil minimum polyethylene on the soil floor with joints lapped at least 6 inches (taped or sealed in encapsulated crawlspaces), extending up the foundation wall and mechanically attached — to the top of the wall in a sealed/encapsulated crawl, at least 6 inches up in a vented crawl. Code requirement; commonly violated in older homes."
+    },
+    {
+      "id": "found-014",
+      "pack": "foundations",
+      "verdict": "MINOR_ISSUE",
+      "front": "Frost line depth in NC mountains — what's the code requirement?",
+      "back": "NC mountain counties: 12 inches typical, 24 inches in higher elevations per local code. Footings MUST be below the frost line, otherwise frost heave will lift and crack the foundation. Older WNC structures with shallow footings are a common settlement source.",
+      "issue": "The '12 inches typical' figure is too shallow for most WNC mountain counties. NC's prescriptive footing depth from the residential code is 12 inches statewide minimum, but local jurisdictions across WNC commonly require 18 inches (and 24 inches at higher elevations). Macon, Jackson, Haywood, Buncombe, Watauga and similar counties typically enforce 18-inch minimums, with 24 inches above certain elevations. Saying '12 inches typical' for the mountains understates what an inspector or building department will actually require.",
+      "suggested_fix": "NC code sets a 12-inch statewide minimum, but most WNC mountain counties enforce 18 inches as the working minimum, and 24 inches at higher elevations per local amendment. Footings must be below the frost line — otherwise frost heave will lift and crack the foundation. Older WNC structures with shallow footings are a common settlement source."
+    }
+  ]
+}

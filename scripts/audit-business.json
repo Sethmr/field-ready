@@ -1,0 +1,82 @@
+{
+  "summary": {
+    "total": 81,
+    "correct": 73,
+    "minor": 5,
+    "incorrect": 3
+  },
+  "issues": [
+    {
+      "id": "form-014",
+      "pack": "forms",
+      "verdict": "MINOR_ISSUE",
+      "front": "Lead-based paint disclosure — what's the exact timing requirement?",
+      "back": "Federal Title X requires delivery of the lead-based paint disclosure pamphlet and disclosure form to the buyer BEFORE the contract is binding (offer to purchase). Pre-1978 homes only. Seller and listing agent both sign. 10-day buyer inspection right for lead is independent and runs from the disclosure date.",
+      "issue": "The 10-day lead inspection/risk-assessment period under Title X (24 CFR 35.90/35.92) runs from the buyer's receipt of the disclosure and pamphlet but is typically structured to occur prior to becoming obligated under the contract — practitioners commonly tie it to contract acceptance/effective date and the period is waivable or modifiable in writing by mutual agreement. Saying it 'runs from the disclosure date' as a flat rule oversimplifies and can mislead.",
+      "suggested_fix": "Change last sentence to: 'Buyer also gets a 10-day opportunity to conduct a lead-based paint risk assessment/inspection (waivable or modifiable in writing) before becoming obligated under the contract.'"
+    },
+    {
+      "id": "land-006",
+      "pack": "land",
+      "verdict": "MINOR_ISSUE",
+      "front": "Typical setback requirements on a Macon County rural lot?",
+      "back": "Macon rural zoning: front 25 ft, side 15 ft, rear 25 ft, typical. Many subdivisions impose tighter setbacks via covenants. Always check the parcel's zoning AND the subdivision restrictions before promising buildability.",
+      "issue": "Most of unincorporated Macon County is NOT zoned — there is no countywide zoning ordinance. The 'Macon rural zoning' framing is misleading. Setbacks in unzoned areas come from the NC State Building Code, septic/well separation requirements (NCAC 18A/18E), and any subdivision covenants — not from a county zoning ordinance. Town of Highlands and Town of Franklin have their own zoning within town limits.",
+      "suggested_fix": "Reframe: 'Most of unincorporated Macon County is unzoned — setbacks come from the NC State Building Code, septic/well separations, and subdivision covenants, not a county zoning ordinance. Town of Franklin and Town of Highlands have their own zoning inside city limits. Always verify covenants AND any town zoning before promising buildability.'"
+    },
+    {
+      "id": "land-014",
+      "pack": "land",
+      "verdict": "MINOR_ISSUE",
+      "front": "Buyer asks if a vacant lot has electrical service. How do you verify?",
+      "back": "Call the relevant electric co-op for the area (Haywood EMC, Blue Ridge EMC). Request a service availability quote: anywhere from no charge (existing pole at the lot line) to $5–15K (long line extension over private land). Disclose status BEFORE contract to avoid surprises.",
+      "issue": "For Macon County (Brandi's primary service area), the dominant electric providers are Duke Energy Carolinas and Tri-State EMC — not Haywood EMC or Blue Ridge EMC. Haywood EMC serves Haywood County; Blue Ridge EMC serves the Boone area. Naming the wrong utilities for the home market is a credibility hit.",
+      "suggested_fix": "Replace named utilities with Macon-relevant ones: 'Call the relevant utility for the parcel — in Macon County that's typically Duke Energy or Tri-State EMC; Jackson County is Duke Energy or Haywood EMC. Request a service availability quote...'"
+    },
+    {
+      "id": "closing-003",
+      "pack": "closing",
+      "verdict": "MINOR_ISSUE",
+      "front": "Title insurance in NC — who pays what?",
+      "back": "Owner's policy protects the BUYER's title interest; typically buyer pays (~$300–700 on a $400K sale). Lender's policy protects the lender; buyer pays. Seller pays for title clearing if defects surface. The split is negotiable but the conventional NC split is: buyer pays both policies.",
+      "issue": "The $300–700 estimate for an owner's policy on a $400K NC sale is low. NC title insurance rates are filed/promulgated and run roughly $1.50–$2.00 per $1,000 for the basic owner's policy, putting a $400K policy in the $700–$1,200 range, with simultaneous-issue lender's policy adding a small additional premium. Quoting $300–700 will under-budget the buyer's net sheet.",
+      "suggested_fix": "Update cost: 'Owner's policy on a $400K NC sale typically runs ~$700–$1,200 (NC rates are filed; figure roughly $1.50–$2.00 per $1,000). Simultaneous-issue lender's policy adds a small additional premium. Buyer customarily pays both.'"
+    },
+    {
+      "id": "inspect-015",
+      "pack": "inspect",
+      "verdict": "INCORRECT",
+      "front": "Inspection report retention — how long should the seller keep it?",
+      "back": "Pre-listing inspection: retain through closing + 7 years (NC statute of limitations on real estate fraud is 4 years for some claims, 7 for others — keep the longer window). Buyer's inspection: their record. Both belong in the seller's house file along with permits, warranties, and pump records.",
+      "issue": "The cited NC statutes of limitations are wrong. NC fraud is a 3-year SOL from discovery (NCGS 1-52(9)); breach of contract is 3 years (NCGS 1-52(1)); a 4-year UDTPA claim exists (NCGS 75-16.2); and there is a 6-year statute of repose for improvements to real property (NCGS 1-50(a)(5)). There is no '4 years for some claims, 7 for others' framework in NC real estate law. The retention recommendation itself (long-term retention) is fine, but the statutory rationale is inaccurate.",
+      "suggested_fix": "Replace rationale: 'Pre-listing inspection: retain through closing + at least 6 years (NC has a 3-year SOL on fraud/contract claims from discovery and a 6-year statute of repose on improvements to real property — keep through the longer window). Buyer's inspection: their record. Both belong in the seller's house file with permits, warranties, and pump records.'"
+    },
+    {
+      "id": "land-003",
+      "pack": "land",
+      "verdict": "INCORRECT",
+      "front": "Property is encumbered by a conservation easement. What does the buyer need to know?",
+      "back": "Reduces buildable area and may carry public access rights. Tax benefits from the original donor may transfer or may have been used up — confirm. Common easement holders in WNC: Mainspring Conservation Trust, Highlands-Cashiers Land Trust, Land Trust for the Little Tennessee.",
+      "issue": "Mainspring Conservation Trust and the Land Trust for the Little Tennessee (LTLT) are the SAME organization. LTLT merged with the Macon County Land Conservancy in 2014 and rebranded as Mainspring Conservation Trust. Listing both implies two separate easement holders when there is only one. Also, conservation easements rarely carry public access rights unless specifically negotiated — most WNC easements are private/non-access.",
+      "suggested_fix": "Correct: 'Reduces buildable area; may (rarely) carry public access if specifically granted in the easement deed. Tax benefits from the original donor may transfer or may have been used up — confirm. Common WNC easement holders: Mainspring Conservation Trust (formerly Land Trust for the Little Tennessee, rebranded 2014), Highlands-Cashiers Land Trust, Blue Ridge Conservancy, Southern Appalachian Highlands Conservancy.'"
+    },
+    {
+      "id": "closing-015",
+      "pack": "closing",
+      "verdict": "INCORRECT",
+      "front": "Seller wants to stay in the house after closing — what's the mechanism?",
+      "back": "A rent-back agreement (NC NCAR Form 2A12-T or contract addendum). Seller stays for N days post-closing, pays daily rent (often $0–100/day, sometimes a security deposit). Cap at 60 days — beyond that, lender may treat the property as non-owner-occupied and there's insurance complication.",
+      "issue": "NCAR Form 2A12-T does not exist for post-closing seller occupancy. The correct NCAR standard form is Form 2A7-T (Buyer Possession Before Closing Agreement) and Form 2A8-T (Seller Possession After Closing Agreement) — for a seller staying after closing, Form 2A8-T is the right reference. Citing the wrong form number on a closing-day mechanic is a credibility-killer with attorneys and other agents.",
+      "suggested_fix": "Replace form reference: 'A rent-back / Seller Possession After Closing Agreement (NCAR Standard Form 2A8-T) or a contract addendum. Seller stays for N days post-closing, pays daily rent (often $0–100/day, sometimes a security deposit). Cap at 60 days — beyond that, lender may treat the property as non-owner-occupied and there's insurance complication.'"
+    },
+    {
+      "id": "form-001",
+      "pack": "forms",
+      "verdict": "MINOR_ISSUE",
+      "front": "What does NCRPOADS stand for, and when must it be delivered?",
+      "back": "NC Residential Property and Owners' Association Disclosure Statement (Form REC 4.22). Must be delivered to the buyer BEFORE the offer is signed.",
+      "issue": "Statutory wording (NCGS 47E-5) requires delivery 'no later than the time the purchaser makes an offer to purchase.' If the seller fails to deliver before the offer is binding, the buyer has a 3-calendar-day right to cancel without penalty. 'BEFORE the offer is signed' is a common shorthand but technically the trigger is 'before the offer is binding' and there's a curative 3-day cancellation right that the card omits — that 3-day right is actually one of the most important practical points on this disclosure.",
+      "suggested_fix": "Tighten: 'NC Residential Property and Owners' Association Disclosure Statement (Form REC 4.22). Per NCGS 47E-5, must be delivered no later than when the buyer makes the offer. If late, buyer has a 3-day right to cancel without penalty.'"
+    }
+  ]
+}

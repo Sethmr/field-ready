@@ -1,5 +1,12 @@
 #!/usr/bin/env node
 /**
+ * ⚠️  HITS ANTHROPIC API DIRECTLY (metered against ANTHROPIC_API_KEY).
+ *     For ad-hoc card maintenance, prefer dispatching a Claude Code subagent
+ *     instead — that uses your local Opus subscription, not API tokens. This
+ *     script is intended for the initial bulk-generation pass where the
+ *     simplicity and idempotency of the file-based pipeline is worth the API
+ *     cost (~$0.04 per card).
+ *
  * FieldReady — variant generation script
  *
  * Reads ../cards.js, calls Anthropic API to generate N reworded variants per

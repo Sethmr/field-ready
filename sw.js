@@ -11,7 +11,7 @@
 //     is in cache.
 //   - Bump CACHE_VERSION when you ship a change you want to force-refresh.
 
-const CACHE_VERSION = "fr-v4";
+const CACHE_VERSION = "fr-v5";
 const APP_CACHE = `${CACHE_VERSION}-app`;
 const ASSET_CACHE = `${CACHE_VERSION}-assets`;
 

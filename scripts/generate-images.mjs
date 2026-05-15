@@ -1,5 +1,11 @@
 #!/usr/bin/env node
 /**
+ * ⚠️  HITS BOTH ANTHROPIC AND OPENAI APIs (metered against ANTHROPIC_API_KEY
+ *     and OPENAI_API_KEY). The Anthropic call distills the visual prompt; the
+ *     OpenAI call generates the actual image. Anthropic distillation could
+ *     move to a subagent (subscription) but the OpenAI image call is
+ *     unavoidable — Anthropic doesn't generate images.
+ *
  * FieldReady — image generation script
  *
  * For each card in ../cards.js, generate one illustrative image and save to
